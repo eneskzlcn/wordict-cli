@@ -27,8 +27,8 @@ func (h *Handler) init() {
 
 const (
 	Name = "ask"
-	ShortDesc = ""
-	LongDesc = ""
+	ShortDesc = "Asks you about a word."
+	LongDesc = "That commands asks you a question arround your words. Question type can be specified by setting --type flag."
 	QuestionTypeFlagName = "type"
 	QuestionTypeFlagUsage = `Specify the asking question type. Default chooses randomly. If you do not specify
 	an option to flag, it will be set as random too.
@@ -52,6 +52,9 @@ func (h *Handler) CommandRun(command *cli.Command, args []string){
 }
 func (h *Handler) ExecuteCommand() error {
 	return h.command.Execute()
+}
+func (h *Handler) AddSubHandler(handler Handler) {
+	h.command.AddCommand(handler.command)
 }
 func (h *Handler) GetName() string {
 	return Name
