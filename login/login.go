@@ -18,9 +18,9 @@ type Email string
 type Password string
 
 func(e *Email) Validate() error {
-	return validation.Validate(e,
+	return validation.Validate(string(*e),
 		validation.Length(ShortestEmailLength, LongestEmailLength),
-		is.Email,
+		is.EmailFormat,
 		)
 }
 
@@ -29,7 +29,7 @@ func(e *Email) String() string {
 }
 
 func(p *Password) Validate() error {
-	return validation.Validate(p,
+	return validation.Validate(string(*p),
 		validation.Length(ShortestPasswordLength, LongestPasswordLength),
 		is.Alphanumeric,
 	)

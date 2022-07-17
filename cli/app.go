@@ -9,7 +9,6 @@ type Handler interface {
 	ExecuteCommand() error
 	GetName() string
 	GetCommand() *Command
-	init()
 }
 type RootHandler interface {
 	CommandRun(command *Command, args []string)
