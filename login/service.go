@@ -1,19 +1,14 @@
 package login
 
 import (
-	"context"
 	"fmt"
-	"github.com/eneskzlcn/dictionary-app-cli/util"
 )
 
-type LoginClient interface {
-	Post(ctx context.Context, path string, request, response interface{},headers util.HttpHeaders) error
-}
 type Service struct {
-	loginClient LoginClient
+	loginClient *LoginClient
 }
 
-func NewService(loginClient LoginClient) *Service {
+func NewService(loginClient *LoginClient) *Service {
 	return &Service{loginClient: loginClient}
 }
 func (s *Service) Login(request SignInRequest) error {
