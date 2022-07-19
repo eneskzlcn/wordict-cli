@@ -1,4 +1,4 @@
-package util
+package http
 
 type HttpHeaders map[string]string
 
