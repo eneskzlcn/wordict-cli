@@ -3,7 +3,6 @@ package cli
 import (
 	"errors"
 )
-
 type Handler interface {
 	CommandRun(command *Command, args []string)
 	ExecuteCommand() error
@@ -35,7 +34,16 @@ func NewApp(handlers []Handler, rootHandler RootHandler, name string) *App {
 func (app *App) GetName() string {
 	return app.name
 }
-
+func (app *App) AddHandler(handler Handler) error {
+	if app.rootHandler == nil {
+		return errors.New("there is no root handler registered to app")
+	}
+	app.rootHandler.AddSubHandler(handler)
+	return nil
+}
+func (app *App) AddRootHandler(handler RootHandler) {
+	app.rootHandler = handler
+}
 func(app *App) Start() error{
 	if app.rootHandler != nil {
 		return app.rootHandler.ExecuteCommand()

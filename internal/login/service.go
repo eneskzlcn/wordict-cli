@@ -4,11 +4,14 @@ import (
 	"fmt"
 )
 
+type LoginClient interface {
+	Login(request SignInRequest) SignInResponse
+}
 type Service struct {
-	loginClient *LoginClient
+	loginClient LoginClient
 }
 
-func NewService(loginClient *LoginClient) *Service {
+func NewService(loginClient LoginClient) *Service {
 	return &Service{loginClient: loginClient}
 }
 func (s *Service) Login(request SignInRequest) error {

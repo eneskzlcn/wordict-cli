@@ -49,9 +49,10 @@ func (c *Command) GetName() string {
 func (c *Command) AddFlag(flag *Flag) {
 	c.command.Flags().VarP(flag.Value,flag.Name,flag.Shorthand,flag.Usage)
 	c.flags[flag.Name] = flag
-	if flag.IsNoOption == true {
+	if flag.IsNoOption {
 		c.SetFlagNoOptionDefaultValue(flag.Name, flag.NoOptionDefaultValue)
 	}
+
 }
 func (c *Command) AddFlags(flags []*Flag) {
 	for _, flag := range flags {
@@ -60,6 +61,9 @@ func (c *Command) AddFlags(flags []*Flag) {
 }
 func (c *Command) GetFlag(name string) *Flag{
 	return c.flags[name]
+}
+func (c *Command) HasFlag(name string) bool {
+	return c.flags[name] != nil
 }
 func (c *Command) SetFlagNoOptionDefaultValue(name ,value string) {
 	c.command.Flags().Lookup(name).NoOptDefVal = value

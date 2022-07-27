@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/eneskzlcn/dictionary-app-cli/util"
+	httpUtil "github.com/eneskzlcn/dictionary-app-cli/internal/util/http"
 	"io"
 	"net/http"
 )
@@ -16,7 +16,7 @@ type Client struct {
 func NewClient(baseUrl string) *Client {
 	return &Client{baseURL: baseUrl}
 }
-func (c *Client) Get(ctx context.Context, path string, response interface{}, headers util.HttpHeaders) error {
+func (c *Client) Get(ctx context.Context, path string, response interface{}, headers httpUtil.HttpHeaders) error {
 	resp, err := c.sendRequest(ctx, http.MethodGet, path, nil, headers)
 	if err != nil {
 		return err
@@ -30,7 +30,7 @@ func (c *Client) Get(ctx context.Context, path string, response interface{}, hea
 	}
 	return json.Unmarshal(respBytes, response)
 }
-func (c *Client) Post(ctx context.Context, path string, request, response interface{}, headers util.HttpHeaders) error {
+func (c *Client) Post(ctx context.Context, path string, request, response interface{}, headers httpUtil.HttpHeaders) error {
 	resp, err := c.sendRequest(ctx, http.MethodGet, path, request, headers)
 	if err != nil {
 		return err
@@ -44,7 +44,35 @@ func (c *Client) Post(ctx context.Context, path string, request, response interf
 	}
 	return json.Unmarshal(respBytes, response)
 }
-func (c *Client) sendRequest(ctx context.Context, method, path string, requestBody interface{}, headers util.HttpHeaders) (*http.Response, error){
+func (c *Client) Put(ctx context.Context, path string, request, response interface{}, headers httpUtil.HttpHeaders) error {
+	resp, err := c.sendRequest(ctx, http.MethodPut, path, request, headers)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode == http.StatusNotFound {
+		return err
+	}
+	respBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(respBytes, response)
+}
+func (c *Client) Delete(ctx context.Context, path string, request, response interface{}, headers httpUtil.HttpHeaders) error {
+	resp, err := c.sendRequest(ctx, http.MethodDelete, path, request, headers)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode == http.StatusNotFound {
+		return err
+	}
+	respBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(respBytes, response)
+}
+func (c *Client) sendRequest(ctx context.Context, method, path string, requestBody interface{}, headers httpUtil.HttpHeaders) (*http.Response, error){
 	requestBodyBytes,err := json.Marshal(requestBody)
 	if err != nil {
 		return nil, err

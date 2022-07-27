@@ -1,12 +1,12 @@
 package ask
 
-import "github.com/eneskzlcn/dictionary-app-cli/cli"
+import "github.com/eneskzlcn/incli"
 
 func NewAskCommand(run func(command *cli.Command, args []string)) *cli.Command {
 	flags := []*cli.Flag{
-		cli.NewStringFlag(QuestionFlagNoOptionValue,QuestionTypeFlagName,"t",QuestionTypeFlagUsage,QuestionFlagNoOptionValue,true),
+		cli.NewStringFlag(QuestionFlagNoOptionValue, QuestionTypeFlagName,"t", QuestionTypeFlagUsage, QuestionFlagNoOptionValue,true),
 	}
-	command := cli.NewCommand(Name,ShortDesc,LongDesc,nil, run,flags)
+	command := cli.NewCommand(Name, ShortDesc, LongDesc,nil, run,flags)
 	return command
 }
 

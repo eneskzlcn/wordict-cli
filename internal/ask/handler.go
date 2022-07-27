@@ -1,7 +1,7 @@
 package ask
 
 import (
-	"github.com/eneskzlcn/dictionary-app-cli/cli"
+	cli "github.com/eneskzlcn/incli"
 	"log"
 )
 type AskService interface {
@@ -9,7 +9,7 @@ type AskService interface {
 }
 type Handler struct {
 	command *cli.Command
-	service	AskService
+	service AskService
 }
 
 func NewHandler(service AskService) *Handler {

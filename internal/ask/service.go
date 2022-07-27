@@ -5,7 +5,7 @@ import "log"
 type Service struct {
 
 }
-func NewService() * Service {
+func NewService() *Service {
 	return &Service{}
 }
 func(s *Service) Ask(questionType string) error {

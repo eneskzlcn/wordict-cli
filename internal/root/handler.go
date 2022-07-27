@@ -2,7 +2,6 @@ package root
 
 import (
 	"github.com/eneskzlcn/dictionary-app-cli/cli"
-	"github.com/eneskzlcn/dictionary-app-cli/config"
 	"os"
 )
 type RootService interface {
@@ -10,7 +9,7 @@ type RootService interface {
 }
 type Handler struct {
 	command *cli.Command
-	service	RootService
+	service RootService
 }
 func NewHandler(service RootService) *Handler {
 	handler := &Handler{}
@@ -19,13 +18,12 @@ func NewHandler(service RootService) *Handler {
 	return handler
 }
 func (h *Handler) init() {
-	h.command = cli.NewCommand(config.AppConfig.Name,ShortDesc,LongDesc,nil,h.CommandRun,nil)
+	h.command = NewRootCommand(h.CommandRun)
 }
 
 const (
 	Name = "wordict"
-	ShortDesc = "Wordict is an application to learn english"
-	LongDesc = `Wordict designed as a long term english learning process.`
+
 )
 
 func (h *Handler) CommandRun(command *cli.Command, args []string){

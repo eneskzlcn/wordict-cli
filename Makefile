@@ -13,3 +13,7 @@ lint:
 
 unit-test:
 	go clean -testcache && go test ./... -short
+
+mockgen:
+	mockgen -destination=internal/mocks/login/mock_login_client.go -package mocks github.com/eneskzlcn/dictionary-app-cli/internal/login LoginClient
+	mockgen -destination=internal/mocks/login/mock_login_service.go -package mocks github.com/eneskzlcn/dictionary-app-cli/internal/login LoginService

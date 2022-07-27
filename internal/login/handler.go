@@ -2,7 +2,7 @@ package login
 
 import (
 	"fmt"
-	"github.com/eneskzlcn/dictionary-app-cli/cli"
+	"github.com/eneskzlcn/incli"
 )
 
 type LoginService interface {
@@ -17,8 +17,7 @@ const (
 	Name = "login"
 )
 
-
-func (h *Handler) init() {
+func (h *Handler) Init() {
 	h.command = NewLoginCommand(h.CommandRun)
 }
 
@@ -26,7 +25,7 @@ func NewHandler(service LoginService) *Handler {
 	handler := &Handler{
 		service: service,
 	}
-	handler.init()
+	handler.Init()
 	return handler
 }
 

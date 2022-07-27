@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/eneskzlcn/dictionary-app-cli/ask"
-	"github.com/eneskzlcn/dictionary-app-cli/cli"
+	cli "github.com/eneskzlcn/incli"
 	"github.com/eneskzlcn/dictionary-app-cli/client"
 	"github.com/eneskzlcn/dictionary-app-cli/config"
-	"github.com/eneskzlcn/dictionary-app-cli/login"
-	"github.com/eneskzlcn/dictionary-app-cli/root"
+	ask "github.com/eneskzlcn/dictionary-app-cli/internal/ask"
+	login "github.com/eneskzlcn/dictionary-app-cli/internal/login"
+	root "github.com/eneskzlcn/dictionary-app-cli/internal/root"
 	"os"
 )
 var app *cli.App
@@ -18,7 +18,9 @@ func init() {
 	askService := ask.NewService()
 	askHandler := ask.NewHandler(askService)
 
-	loginClient := client.NewClient("x")
+	restClient := client.NewClient("x")
+
+	loginClient := login.NewClient(restClient)
 	loginService := login.NewService(loginClient)
 	loginHandler := login.NewHandler(loginService)
 

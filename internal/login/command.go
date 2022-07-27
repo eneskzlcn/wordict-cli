@@ -1,13 +1,15 @@
 package login
 
-import "github.com/eneskzlcn/dictionary-app-cli/cli"
+import "github.com/eneskzlcn/incli"
 
 func NewLoginCommand(run func(command *cli.Command, args []string)) *cli.Command {
 	flags := []*cli.Flag{
 		cli.NewStringFlag(DefaultValue, EmailFlagName, EmailFlagShorthand, EmailFlagUsage, NoOptionDefaultValue,false),
 		cli.NewStringFlag(DefaultValue, PasswordFlagName, PasswordFlagShorthand, PasswordFlagUsage, NoOptionDefaultValue,false),
 	}
-	command := cli.NewCommand(Name,ShortDesc,LongDesc,nil,run,flags)
+	command := cli.NewCommand(Name, ShortDesc, LongDesc,nil, func(command *cli.Command, strings []string) {
+		run(command, strings)
+	},flags)
 	return command
 }
 
